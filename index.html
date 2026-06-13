@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Bild-Block Phase 6 — EEG-Stimulus-Runner</title>
+<title>Bild-Block Phase 6 – EEG-Stimulus-Runner</title>
 <style>
   * { box-sizing:border-box; margin:0; padding:0; }
   html,body { height:100%; background:#808080; color:#1a1a1a;
@@ -49,7 +49,7 @@
 
 <script>
 /* ============================================================================
-   Bild-Block Phase 6 — selbst-timender EEG-Stimulus-Runner (v9)
+   Bild-Block Phase 6 – selbst-timender EEG-Stimulus-Runner (v9)
    NEU v9: Sprech-Reaktion nach den 4 Konsum-Bildern (S11 „optional Voice").
    - Bild 6 s = artefaktfreies EEG fürs FAA; DANACH (nur Konsum) eine feste
      Sprech-Phase: kurzer Beep als „Sprich jetzt"-Cue + epoch_ms-Marker, dann
@@ -193,7 +193,7 @@ function finish() {
   const endEpoch = Date.now();
   log.push({ event:'run_end', block:'', file:'', onset_epoch:endEpoch, offset_epoch:endEpoch, onset_rel:endEpoch - runStartEpoch, planned_ms:0 });
 
-  const head = '# Bild-Block Phase 6 (v9) — Marker-Log. onset/offset = epoch_ms (Date.now), 1:1 alignbar mit dem EEG-Roh-Export. sync_beep_start + speech_prompt-Beeps sind im externen Audio hörbar -> Audio am Beep anlegen, an speech_prompt-epoch_ms segmentieren. washout = graue Pause + Kreuz, gejittert.\n'
+  const head = '# Bild-Block Phase 6 (v9) – Marker-Log. onset/offset = epoch_ms (Date.now), 1:1 alignbar mit dem EEG-Roh-Export. sync_beep_start + speech_prompt-Beeps sind im externen Audio hörbar -> Audio am Beep anlegen, an speech_prompt-epoch_ms segmentieren. washout = graue Pause + Kreuz, gejittert.\n'
              + 'event,block,file,onset_epoch_ms,offset_epoch_ms,onset_rel_ms,planned_ms,actual_dur_ms\n';
   const rows = log.map(r => `${r.event},${r.block},${r.file},${r.onset_epoch},${r.offset_epoch},${r.onset_rel},${r.planned_ms},${r.offset_epoch - r.onset_epoch}`).join('\n');
   const csv = '﻿' + head + rows;
