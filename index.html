@@ -6,9 +6,11 @@
 <title>Bild-Block Phase 6 – EEG-Stimulus-Runner</title>
 <style>
   * { box-sizing:border-box; margin:0; padding:0; }
-  html,body { height:100%; background:#808080; color:#1a1a1a;
-    font-family:-apple-system,Segoe UI,Roboto,sans-serif; overflow:hidden; }
-  #stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#808080; }
+  /* Start-/Abschluss-Schirm im warmen Tracker-Theme (Inter, #F7F5F1). Während des
+     Bild-Blocks schaltet der Schirm per JS auf das kontrollierte Grau (#808080). */
+  html,body { height:100%; background:#F7F5F1; color:#23302E;
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; overflow:hidden; }
+  #stage { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#F7F5F1; }
   #img { width:82vw; height:78vh; max-width:1040px; max-height:832px; object-fit:contain; display:none; }
   #cross { display:none; position:relative; width:38px; height:38px; }
   #cross::before, #cross::after { content:''; position:absolute; background:#1a1a1a; }
@@ -20,16 +22,17 @@
   #speech .hint { margin-top:20px; font-size:15px; color:#3a3f44; }
   #speech .dot { display:inline-block; width:10px; height:10px; border-radius:50%; background:#356a64; margin-right:8px; vertical-align:middle; }
   #panel { max-width:680px; padding:30px 34px; text-align:center; line-height:1.6;
-    background:rgba(15,23,42,0.92); border:1px solid rgba(255,255,255,0.12); border-radius:14px; }
-  #panel h1 { font-size:22px; margin-bottom:14px; color:#22d3ee; }
-  #panel p { font-size:15px; color:#cbd5e1; margin-bottom:10px; }
-  #instruction { font-size:19px; color:#f1f5f9; line-height:1.5; margin-bottom:22px; }
-  #panel small { color:#94a3b8; }
-  #cfg { margin-top:16px; font-size:12px; color:#64748b; font-family:monospace; }
-  button { margin-top:18px; background:#06b6d4; color:#000; border:0; border-radius:8px;
+    background:#FCFBF8; border:1px solid #E4DFD5; border-radius:14px; box-shadow:0 4px 24px rgba(35,48,46,0.08); }
+  #panel h1 { font-size:22px; margin-bottom:14px; color:#356A64; }
+  #panel p { font-size:15px; color:#3A4744; margin-bottom:10px; }
+  #instruction { font-size:19px; color:#23302E; line-height:1.5; margin-bottom:22px; }
+  #panel small { color:#6B7268; }
+  #cfg { margin-top:16px; font-size:12px; color:#6B7268; }
+  button { margin-top:18px; background:#356A64; color:#F7F5F1; border:0; border-radius:8px;
     padding:10px 22px; font-size:15px; font-weight:700; cursor:pointer; }
+  button:hover:not(:disabled) { background:#2A554F; }
   button:disabled { opacity:.4; cursor:default; }
-  a#dl { color:#22d3ee; }
+  a#dl { color:#356A64; }
 </style>
 </head>
 <body>
@@ -185,11 +188,13 @@ function start() {
   startBtn.removeEventListener('click', start);
   if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen().catch(()=>{}); }
   panel.style.display = 'none';
+  $('stage').style.background = '#808080';   // kontrolliertes Grau (matched luminance) für den Bild-Block
   runAll();
 }
 
 function finish() {
   showBlank();
+  $('stage').style.background = '#F7F5F1';   // Abschluss-Schirm wieder warm (Theme)
   const endEpoch = Date.now();
   log.push({ event:'run_end', block:'', file:'', onset_epoch:endEpoch, offset_epoch:endEpoch, onset_rel:endEpoch - runStartEpoch, planned_ms:0 });
 
